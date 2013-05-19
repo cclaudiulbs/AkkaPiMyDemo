@@ -1,0 +1,6 @@
+Calculating Pi is a CPU intensive operation and we will utilize Akka Actors to write a concurrent solution that scales out to multi-core processors.
+Each job is completely isolated, and will NOT interact with other job.
+
+Each job is parallelised so that the master actor will aggregate the results processed by each of the worker actors; 
+
+The design we are aiming for is to have one Master actor initiating the computation, creating a set of Worker actors. Then it splits up the work into discrete chunks, and sends these chunks to the different workers in a round-robin fashion. The master waits until all the workers have completed their work and sent back results for aggregation. When computation is completed the master sends the result to the Listener, which prints out the result.
